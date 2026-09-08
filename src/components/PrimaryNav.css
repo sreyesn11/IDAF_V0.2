@@ -1,0 +1,33 @@
+.primary-nav {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.primary-nav a {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.25rem;
+  color: #1e293b;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.primary-nav a:hover {
+  background: #f1f5f9;
+}
+
+/* FR-029 — área activa perceptible de forma visible. */
+.primary-nav a.is-active {
+  font-weight: 700;
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+/* FR-031 — indicador de foco de teclado visible. */
+.primary-nav a:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
