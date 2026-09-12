@@ -6,7 +6,7 @@ export interface AreaFixture {
 }
 
 export const AREAS: AreaFixture[] = [
-  { label: 'Inicio', path: '/', heading: 'IDAF' },
+  { label: 'Inicio', path: '/', heading: 'Inicio' },
   { label: 'Inventario', path: '/inventario', heading: 'Inventario' },
   { label: 'Descubrimiento', path: '/descubrimiento', heading: 'Descubrimiento' },
   { label: 'Conexiones', path: '/conexiones', heading: 'Conexiones' },

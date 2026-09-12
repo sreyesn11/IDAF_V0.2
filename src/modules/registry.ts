@@ -31,6 +31,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.home,
     order: 1,
     status: 'available',
+    icon: 'home',
+    description: idaf.areaDescriptions.home,
     Component: HomeView,
   },
   {
@@ -39,6 +41,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.inventory,
     order: 2,
     status: 'unavailable',
+    icon: 'inventory',
+    description: idaf.areaDescriptions.inventory,
     Component: InventoryView,
   },
   {
@@ -47,6 +51,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.discovery,
     order: 3,
     status: 'unavailable',
+    icon: 'discovery',
+    description: idaf.areaDescriptions.discovery,
     Component: DiscoveryView,
   },
   {
@@ -55,6 +61,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.connections,
     order: 4,
     status: 'unavailable',
+    icon: 'connections',
+    description: idaf.areaDescriptions.connections,
     Component: ConnectionsView,
   },
   {
@@ -63,6 +71,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.diagnostics,
     order: 5,
     status: 'unavailable',
+    icon: 'diagnostics',
+    description: idaf.areaDescriptions.diagnostics,
     Component: DiagnosticsView,
   },
   {
@@ -71,6 +81,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.topology,
     order: 6,
     status: 'unavailable',
+    icon: 'topology',
+    description: idaf.areaDescriptions.topology,
     Component: TopologyView,
   },
   {
@@ -79,6 +91,8 @@ export const MODULE_REGISTRY: readonly FunctionalArea[] = [
     label: idaf.areaLabels.observability,
     order: 7,
     status: 'unavailable',
+    icon: 'observability',
+    description: idaf.areaDescriptions.observability,
     Component: ObservabilityView,
   },
 ] as const;
@@ -100,5 +114,6 @@ export function selectAreaList(
         area.status === 'available'
           ? idaf.statusText.available
           : idaf.statusText.unavailable,
+      available: area.status === 'available',
     }));
 }

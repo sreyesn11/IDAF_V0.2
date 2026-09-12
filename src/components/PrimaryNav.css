@@ -1,33 +1,50 @@
 .primary-nav {
   display: flex;
-  gap: 0.25rem;
-  flex-wrap: wrap;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #cbd5e1;
+  flex-direction: column;
+  gap: var(--space-50);
+  min-width: 0;
 }
 
-.primary-nav a {
-  display: inline-block;
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.25rem;
-  color: #1e293b;
+.primary-nav__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-150);
+  padding: var(--space-150) var(--space-200);
+  border-left: 4px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
   text-decoration: none;
-  border: 1px solid transparent;
+  font-weight: var(--font-weight-regular);
+  min-height: 24px;
+  transition: background var(--motion-fast), border-color var(--motion-fast);
 }
 
-.primary-nav a:hover {
-  background: #f1f5f9;
+.primary-nav__link:hover {
+  background: var(--color-surface-raised);
 }
 
-/* FR-029 — área activa perceptible de forma visible. */
-.primary-nav a.is-active {
-  font-weight: 700;
-  background: #e2e8f0;
-  border-color: #94a3b8;
+.primary-nav__label {
+  white-space: nowrap;
 }
 
-/* FR-031 — indicador de foco de teclado visible. */
-.primary-nav a:focus-visible {
-  outline: 3px solid #2563eb;
-  outline-offset: 2px;
+/*
+ * Estado activo (FR-021; SC-031): al menos 2 propiedades renderizadas
+ * simultáneas, de las que al menos 1 es no cromática —
+ *   1) borde de acento IZQUIERDO (forma: presencia/grosor, no sólo color)
+ *   2) peso tipográfico distinto (no cromática)
+ *   3) color de texto de identidad (adicional, nunca la única señal)
+ *   4) fondo de superficie elevado (adicional)
+ * Las señales (1) y (2) siguen siendo perceptibles en simulación de
+ * acromatopsia.
+ */
+.primary-nav__link.is-active {
+  border-left-color: var(--color-identity-strong);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-identity-strong);
+  background: var(--color-surface-raised);
+}
+
+.primary-nav__link:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }

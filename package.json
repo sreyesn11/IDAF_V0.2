@@ -3,11 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Fundación funcional de IDAF — experiencia base y navegación (SPEC 001)",
+  "description": "IDAF — acceso autenticado, identidad visual definitiva y navegación por icono+nombre (SPEC 002)",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4173 --strictPort",
+    "auth": "node server/index.mjs",
+    "auth:seed": "node scripts/seed-dev-accounts.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test"
   },
@@ -21,6 +23,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.20.2",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

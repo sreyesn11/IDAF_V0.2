@@ -67,6 +67,41 @@ export const idaf = {
 
   /** FR-030 — nombre accesible de la navegación principal. */
   navAriaLabel: 'Áreas de IDAF',
+
+  /**
+   * FR-019 / FR-033 — descripción breve por área para `ModuleHeader`, cuando
+   * aporta claridad (no todas la necesitan igual, pero se define una para
+   * cada una por consistencia — FR-036).
+   */
+  areaDescriptions: {
+    home: 'Resumen del producto y estado de las siete áreas.',
+    inventory: 'Catálogo de dispositivos de red e IoT detectados.',
+    discovery: 'Búsqueda y exploración de dispositivos en la red.',
+    connections: 'Estado de los enlaces y conexiones entre dispositivos.',
+    diagnostics: 'Análisis técnico y diagnóstico de dispositivos.',
+    topology: 'Relaciones y mapa de red entre dispositivos.',
+    observability: 'Métricas y monitoreo continuo de la red.',
+  } satisfies Record<FunctionalAreaId, string>,
+
+  /** FR-002, FR-006, FR-054, FR-056 — pantalla de acceso. */
+  auth: {
+    usernameLabel: 'Usuario',
+    passwordLabel: 'Contraseña',
+    submitLabel: 'Iniciar sesión',
+    requiredField: 'Este campo es obligatorio.',
+    /** FR-004/FR-005 — genérico: nunca indica qué campo falló. */
+    invalidCredentials: 'Usuario o contraseña incorrectos.',
+    /** FR-056 — distinto del anterior; verificación no disponible. */
+    unavailable: 'No se pudo verificar el acceso. Inténtalo de nuevo.',
+    showPassword: 'Mostrar contraseña',
+    hidePassword: 'Ocultar contraseña',
+  },
+
+  /** FR-011, FR-012, FR-015 — contexto de sesión (header). */
+  session: {
+    regionLabel: 'Sesión',
+    logout: 'Cerrar sesión',
+  },
 } as const;
 
 export type IdafContent = typeof idaf;

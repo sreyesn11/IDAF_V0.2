@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import type { IconName } from '../components/icons';
 
 /**
  * Estado de disponibilidad de un área funcional.
@@ -35,6 +36,10 @@ export interface FunctionalArea {
   order: number;
   /** Fijo en esta spec. */
   status: AvailabilityStatus;
+  /** Icono de la familia única que representa el concepto del área (FR-019/020). */
+  icon: IconName;
+  /** Descripción breve para `ModuleHeader`, cuando aporta claridad (FR-033). */
+  description?: string;
   /** Vista de React sin props obligatorias. */
   Component: ComponentType;
 }

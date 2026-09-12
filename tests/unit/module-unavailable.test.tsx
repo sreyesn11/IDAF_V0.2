@@ -1,53 +1,38 @@
-import { render, screen, within } from '@testing-library/react';
-import { InventoryView } from '../../src/modules/inventory/InventoryView';
-import { DiscoveryView } from '../../src/modules/discovery/DiscoveryView';
-import { ConnectionsView } from '../../src/modules/connections/ConnectionsView';
-import { DiagnosticsView } from '../../src/modules/diagnostics/DiagnosticsView';
-import { TopologyView } from '../../src/modules/topology/TopologyView';
-import { ObservabilityView } from '../../src/modules/observability/ObservabilityView';
+import { render, screen } from '@testing-library/react';
+import { ModuleUnavailable } from '../../src/components/ModuleUnavailable';
+import { idaf } from '../../src/content/idaf';
 
-const PENDING_MODULES = [
-  { label: 'Inventario', View: InventoryView },
-  { label: 'Descubrimiento', View: DiscoveryView },
-  { label: 'Conexiones', View: ConnectionsView },
-  { label: 'Diagnósticos', View: DiagnosticsView },
-  { label: 'Topología', View: TopologyView },
-  { label: 'Observabilidad', View: ObservabilityView },
-];
+describe('ModuleUnavailable (contract visual-system.md §3.6; FR-043/044; SC-014)', () => {
+  it('renderiza ModuleHeader + icono del módulo + StatusBadge "No disponible" + explicación', () => {
+    const { container } = render(<ModuleUnavailable areaLabel="Inventario" icon="inventory" />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Inventario' })).toBeInTheDocument();
+    expect(screen.getByText(idaf.statusText.unavailable)).toBeInTheDocument();
+    expect(screen.getByText(idaf.unavailableBody)).toBeInTheDocument();
+    expect(container.querySelector('svg')).not.toBeNull();
+  });
 
-describe('Vistas de módulo no disponible (FR-015..FR-018, SC-004, US3)', () => {
-  for (const { label, View } of PENDING_MODULES) {
-    describe(label, () => {
-      it('has a heading containing the module label', () => {
-        render(<View />);
-        expect(screen.getByRole('heading', { name: label })).toBeInTheDocument();
-      });
+  it('prohíbe cualquier elemento interactivo o de datos (FR-043/044)', () => {
+    const { container } = render(<ModuleUnavailable areaLabel="Inventario" icon="inventory" />);
+    expect(container.querySelector('button')).toBeNull();
+    expect(container.querySelector('input')).toBeNull();
+    expect(container.querySelector('form')).toBeNull();
+    expect(container.querySelector('select')).toBeNull();
+    expect(container.querySelector('[role="button"]')).toBeNull();
+    expect(container.querySelector('table')).toBeNull();
+    expect(container.querySelector('a')).toBeNull();
+  });
 
-      it('states explicitly that the functionality is pending and will be added later', () => {
-        render(<View />);
-        const text = document.body.textContent ?? '';
-        expect(text).toMatch(/todavía no está disponible/i);
-        expect(text).toMatch(/versión posterior de IDAF/i);
-      });
+  it('no muestra valores que parezcan métricas ni datos de dispositivo', () => {
+    render(<ModuleUnavailable areaLabel="Diagnósticos" icon="diagnostics" />);
+    const text = document.body.textContent ?? '';
+    expect(text).not.toMatch(/\b\d{1,3}(\.\d{1,3}){3}\b/); // IPv4
+    expect(text).not.toMatch(/\d+\s?(ms|Mbps|%|dispositivos)\b/i);
+  });
 
-      it('exposes no actionable control (FR-017)', () => {
-        const { container } = render(<View />);
-        expect(screen.queryAllByRole('button')).toHaveLength(0);
-        expect(container.querySelector('input')).toBeNull();
-        expect(container.querySelector('form')).toBeNull();
-        expect(container.querySelector('select')).toBeNull();
-        expect(container.querySelector('[role="button"]')).toBeNull();
-        expect(container.querySelector('a')).toBeNull();
-      });
-
-      it('is not empty and shows no internal technical text (FR-018)', () => {
-        const { container } = render(<View />);
-        const region = container.querySelector('section') ?? container;
-        expect((within(region as HTMLElement).getByRole('heading').textContent ?? '').length).toBeGreaterThan(0);
-        const text = document.body.textContent ?? '';
-        expect(text.trim().length).toBeGreaterThan(20);
-        expect(text).not.toMatch(/error|exception|stack|traceback|\.tsx?\b|undefined|null/i);
-      });
-    });
-  }
+  it('conserva la explicación explícita de incorporación futura (idéntica en todas las áreas)', () => {
+    render(<ModuleUnavailable areaLabel="Topología" icon="topology" />);
+    const text = document.body.textContent ?? '';
+    expect(text).toMatch(/todavía no está disponible/i);
+    expect(text).toMatch(/versión posterior de IDAF/i);
+  });
 });

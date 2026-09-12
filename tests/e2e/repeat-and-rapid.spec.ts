@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { AREAS } from './_areas';
+import { loginAs } from './_session';
 
 function collectConsoleErrors(page: import('@playwright/test').Page): string[] {
   const errors: string[] = [];
@@ -10,10 +11,11 @@ function collectConsoleErrors(page: import('@playwright/test').Page): string[] {
   return errors;
 }
 
-test.describe('Reselección y alternancia rápida (US2, EC-01/EC-02)', () => {
+test.describe('Reselección y alternancia rápida (US2/US3, EC-01/EC-02, SC-011)', () => {
   test('reseleccionar el área activa 10 veces: sin errores, un solo encabezado', async ({ page }) => {
     const errors = collectConsoleErrors(page);
-    await page.goto('/diagnosticos');
+    await loginAs(page);
+    await page.getByRole('link', { name: 'Diagnósticos', exact: true }).click();
 
     for (let i = 0; i < 10; i++) {
       await page.getByRole('link', { name: 'Diagnósticos', exact: true }).click();
@@ -29,7 +31,7 @@ test.describe('Reselección y alternancia rápida (US2, EC-01/EC-02)', () => {
     page,
   }) => {
     const errors = collectConsoleErrors(page);
-    await page.goto('/');
+    await loginAs(page);
 
     const sequence = AREAS.filter((a) => a.path !== '/');
     let last = sequence[0];
@@ -45,7 +47,7 @@ test.describe('Reselección y alternancia rápida (US2, EC-01/EC-02)', () => {
     // La app sigue respondiendo a una navegación posterior.
     await page.getByRole('link', { name: 'Inicio', exact: true }).click();
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole('heading', { level: 1, name: 'IDAF' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Inicio' })).toBeVisible();
 
     expect(errors).toEqual([]);
   });

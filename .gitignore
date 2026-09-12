@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 build/
+*.tsbuildinfo
 
 # Test / tooling artifacts
 coverage/
@@ -22,6 +23,11 @@ pnpm-debug.log*
 # Environment
 .env
 .env.*
+!.env.example
+
+# Cuentas de desarrollo/E2E desechables (generadas por scripts/seed-dev-accounts.mjs)
+server/accounts.dev.json
+tests/fixtures/accounts.e2e.json
 
 # Editor / OS
 .DS_Store

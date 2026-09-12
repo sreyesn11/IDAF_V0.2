@@ -1,0 +1,29 @@
+.route-error {
+  padding: var(--space-400);
+}
+
+.route-error__actions {
+  display: flex;
+  gap: var(--space-200);
+  align-items: center;
+}
+
+.route-error__retry {
+  min-height: 40px;
+  padding: var(--space-150) var(--space-200);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-identity);
+  color: var(--color-identity-contrast);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: background var(--motion-fast);
+}
+
+.route-error__retry:hover {
+  background: var(--color-identity-strong);
+}
+
+.route-error__back {
+  color: var(--color-identity);
+}

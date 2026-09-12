@@ -1,19 +1,15 @@
 import { NavLink } from 'react-router-dom';
+import { Icon } from './icons';
 import { idaf } from '../content/idaf';
 import { MODULE_REGISTRY } from '../modules/registry';
 import './PrimaryNav.css';
 
 /**
- * Navegación principal siempre visible (FR-008). Renderiza una entrada por área,
- * exactamente una vez, en el orden de FR-006, tomando las etiquetas SOLO de las
- * entradas del registro (una sola fuente — FR-025).
- *
- * Accesibilidad mínima (research D13, contract C10):
- *  - cada entrada es un `<a>` (`NavLink`), enfocable y activable por teclado (FR-028);
- *  - la entrada de la ruta actual expone `aria-current="page"` (lo pone `NavLink`)
- *    además del estilo visual `is-active` (FR-029);
- *  - el nombre accesible de cada entrada es su etiqueta visible (FR-030);
- *  - `:focus-visible` define un contorno visible (FR-031, ver `PrimaryNav.css`).
+ * Navegación principal (contract navigation-and-routes §3). Una entrada por
+ * área de `MODULE_REGISTRY`, en orden `order`, con icono + nombre visible
+ * (N2; FR-018/024). El estado activo se resuelve con clases (`.is-active`)
+ * que en CSS aplican ≥ 2 propiedades no cromáticas simultáneas (N4; FR-021,
+ * SC-031); `NavLink` añade `aria-current="page"` automáticamente.
  */
 export function PrimaryNav() {
   const areas = [...MODULE_REGISTRY].sort((a, b) => a.order - b.order);
@@ -25,12 +21,11 @@ export function PrimaryNav() {
           key={area.id}
           to={area.path}
           end={area.path === '/'}
-          // tabIndex explícito: garantiza que el foco de teclado alcance cada
-          // entrada también en WebKit/Safari sin "Full Keyboard Access" (FR-028).
           tabIndex={0}
-          className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+          className={({ isActive }) => `primary-nav__link${isActive ? ' is-active' : ''}`}
         >
-          {area.label}
+          <Icon name={area.icon} />
+          <span className="primary-nav__label">{area.label}</span>
         </NavLink>
       ))}
     </nav>

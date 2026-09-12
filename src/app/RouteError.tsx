@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate, useRouteError } from 'react-router-dom';
 import { idaf } from '../content/idaf';
+import './RouteError.css';
 
 /**
  * `errorElement` del router (research D9; contract C8). Se muestra cuando una
@@ -25,18 +26,19 @@ export function RouteError() {
   }, [error, location.pathname]);
 
   return (
-    <section aria-labelledby="route-error-heading">
+    <section className="route-error" aria-labelledby="route-error-heading">
       <h1 id="route-error-heading">{idaf.sectionErrorText}</h1>
-      <p>
+      <p className="route-error__actions">
         <button
           type="button"
+          className="route-error__retry"
           onClick={() => navigate(location.pathname, { replace: true })}
         >
           {idaf.errorActions.retry}
         </button>
-      </p>
-      <p>
-        <Link to="/">{idaf.errorActions.backHome}</Link>
+        <Link to="/" className="route-error__back">
+          {idaf.errorActions.backHome}
+        </Link>
       </p>
     </section>
   );

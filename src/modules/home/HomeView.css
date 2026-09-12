@@ -1,0 +1,19 @@
+.home-view__areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-200);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-view__area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-150);
+}
+
+.home-view__area-label {
+  font-weight: var(--font-weight-medium);
+}

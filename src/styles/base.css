@@ -1,0 +1,53 @@
+/**
+ * Reset ligero + tipografía base + anillo de foco global (contract
+ * visual-system.md §1.3). Todo valor viene de `tokens.css`.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-body);
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-150) 0;
+}
+
+p {
+  margin: 0 0 var(--space-200) 0;
+  line-height: var(--line-height-body);
+}
+
+button,
+input {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a {
+  color: var(--color-identity);
+}
+
+/* Anillo de foco visible, consistente en toda la aplicación (FR-040, FR-041, FR-054). */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}

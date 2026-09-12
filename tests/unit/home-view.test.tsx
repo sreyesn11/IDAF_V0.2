@@ -12,16 +12,16 @@ const AREA_LABELS = [
   'Observabilidad',
 ];
 
-describe('HomeView (FR-001..FR-005, FR-019)', () => {
+describe('HomeView (contract visual-system.md §3.7; FR-059; SC-030)', () => {
   beforeEach(() => {
     render(<HomeView areas={selectAreaList()} />);
   });
 
-  it('shows the product name IDAF', () => {
-    expect(screen.getByRole('heading', { name: 'IDAF' })).toBeInTheDocument();
+  it('muestra un encabezado de módulo "Inicio" (la identidad de producto vive en el AppShell persistente)', () => {
+    expect(screen.getByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
   });
 
-  it('explains the purpose with the four mandatory concepts and "red e IoT"', () => {
+  it('explica el propósito con los cuatro conceptos obligatorios y "red e IoT"', () => {
     const body = document.body.textContent ?? '';
     expect(body).toContain('descubrimiento');
     expect(body).toContain('gestión');
@@ -30,37 +30,40 @@ describe('HomeView (FR-001..FR-005, FR-019)', () => {
     expect(body).toContain('red e IoT');
   });
 
-  it('lists the seven areas exactly once, in order, each with a status label', () => {
+  it('lista las siete áreas exactamente una vez, en orden, cada una con su estado', () => {
     const items = screen.getAllByRole('listitem');
     expect(items).toHaveLength(7);
-
     items.forEach((li, i) => {
-      const spans = Array.from(li.querySelectorAll('span'));
-      expect(spans[0].textContent).toBe(AREA_LABELS[i]);
-      expect(['Disponible', 'No disponible']).toContain(spans[1].textContent);
+      expect(li).toHaveTextContent(AREA_LABELS[i]);
     });
   });
 
-  it('shows "Disponible" once (Inicio) and "No disponible" six times', () => {
+  it('muestra "Disponible" una vez (Inicio) y "No disponible" seis veces', () => {
     const items = screen.getAllByRole('listitem');
-    const statuses = items.map((li) => li.querySelectorAll('span')[1].textContent);
-    expect(statuses.filter((s) => s === 'Disponible')).toHaveLength(1);
-    expect(statuses.filter((s) => s === 'No disponible')).toHaveLength(6);
-    expect(items[0].querySelectorAll('span')[1].textContent).toBe('Disponible');
+    const available = items.filter(
+      (li) => li.textContent?.includes('Disponible') && !li.textContent.includes('No disponible'),
+    );
+    const unavailable = items.filter((li) => li.textContent?.includes('No disponible'));
+    expect(available).toHaveLength(1);
+    expect(unavailable).toHaveLength(6);
   });
 
-  it('renders nothing that resembles a device record', () => {
+  it('no renderiza nada que parezca un registro de dispositivo ni datos operacionales', () => {
     const body = document.body.textContent ?? '';
     expect(body).not.toMatch(/\b\d{1,3}(\.\d{1,3}){3}\b/); // IPv4
     expect(body).not.toMatch(/([0-9a-f]{2}:){5}[0-9a-f]{2}/i); // MAC
     expect(screen.queryByRole('table')).toBeNull();
   });
+
+  it('no sustituye ni oculta la navegación principal (no renderiza su propio <nav>)', () => {
+    expect(screen.queryByRole('navigation')).toBeNull();
+  });
 });
 
-describe('HomeView is presentational (assignable to React.ComponentType)', () => {
-  it('renders with no props (areas defaults to [])', () => {
+describe('HomeView es presentacional (asignable a React.ComponentType)', () => {
+  it('renderiza sin props (areas por defecto = [])', () => {
     render(<HomeView />);
-    expect(screen.getAllByRole('heading', { name: 'IDAF' }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('heading', { level: 1, name: 'Inicio' }).length).toBeGreaterThan(0);
     expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   });
 });

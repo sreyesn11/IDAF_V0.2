@@ -1,0 +1,15 @@
+.module-header {
+  margin-bottom: var(--space-300);
+}
+
+.module-header h1 {
+  font-size: var(--font-size-600);
+  color: var(--color-text);
+}
+
+.module-header__description {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-body);
+  max-width: 60ch;
+}

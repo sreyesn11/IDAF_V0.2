@@ -1,25 +1,30 @@
+import { ModuleHeader } from './ModuleHeader';
+import { Icon, type IconName } from './icons';
+import { StatusBadge } from './StatusBadge';
 import { idaf } from '../content/idaf';
+import './ModuleUnavailable.css';
 
 interface ModuleUnavailableProps {
-  /** Etiqueta visible del área, tomada del registro (que la toma de `idaf.areaLabels`). */
+  /** Etiqueta visible del área, tomada del registro (vía `idaf.areaLabels`). */
   areaLabel: string;
+  /** Icono del módulo, de la única familia de iconos (FR-019/020). */
+  icon: IconName;
 }
 
 /**
- * Placeholder honesto de un área aún no implementada (research D6; contract
- * "Contrato de la vista de módulo no disponible").
- *
- * Solo texto: un encabezado con el nombre del área y un párrafo que indica de
- * forma explícita que la funcionalidad todavía no está disponible y se
- * incorporará en una versión posterior de IDAF. Sin `button`, `input`, `form`,
- * `select`, enlaces de acción ni `role="button"`; sin estado vacío, sin estilo
- * de error, sin información técnica interna (FR-016, FR-017, FR-018).
+ * Placeholder honesto de un área aún no implementada (contract
+ * visual-system.md §3.6). Conserva la identidad de IDAF (tokens, iconos,
+ * `ModuleHeader`) y NUNCA aparenta operar: sin `button`, `input`, `form`,
+ * `select`, `role="button"`, enlaces de acción, tablas de datos ni valores
+ * que parezcan métricas o dispositivos (FR-043, FR-044; SC-014).
  */
-export function ModuleUnavailable({ areaLabel }: ModuleUnavailableProps) {
+export function ModuleUnavailable({ areaLabel, icon }: ModuleUnavailableProps) {
   return (
-    <section aria-labelledby="module-unavailable-heading">
-      <h1 id="module-unavailable-heading">{areaLabel}</h1>
-      <p>{idaf.unavailableBody}</p>
+    <section className="module-unavailable">
+      <ModuleHeader title={areaLabel} />
+      <Icon name={icon} title={areaLabel} className="module-unavailable__icon" />
+      <StatusBadge kind="info">{idaf.statusText.unavailable}</StatusBadge>
+      <p className="module-unavailable__body">{idaf.unavailableBody}</p>
     </section>
   );
 }
